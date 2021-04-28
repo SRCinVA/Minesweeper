@@ -19,8 +19,16 @@ class Board:    # this creates the board object
     def assign_values_to_board(self):
         # !?!?! with bombs planted, assign a number of 0-8 to all empty spaces,
         # which indicates how many neighboring bombs there are. (How will this help us ... ?)
-        for r in range(self.dim_size):
-            
+        for r in range(self.dim_size):       # for row
+            for c in range(self.dim_size):   # for column
+                if self.board[r][c] == '*':  # if it's a bomb at that index ...
+                    continue                 # ... 'continue' in order to not override any of the bombs already planted
+                # this is an implicit 'else'
+                # we use this function to populate 'self.board[r][c]'; showing how many bombs are in that [c][r] vicinity.
+                self.board[r][c] = self.get_num_neighboring_bombs(r,c)  
+    # (just above) this function will give us the number of bombs in the area.          
+    def get_num_neighboring_bombs(self, row, column):
+        # now we have to iterate over every 9 spots surrounding every position.
 
     def make_new_board(self):   # using dim size and num_bombs, make a new board
                                 # in the form of a list of lists (good for a 2d structure)
