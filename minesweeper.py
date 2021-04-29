@@ -17,8 +17,8 @@ class Board:    # this creates the board object
         self.dug = set()
 
     def assign_values_to_board(self):
-        # !?!?! with bombs planted, assign a number of 0-8 to all empty spaces,
-        # which indicates how many neighboring bombs there are. (How will this help us ... ?)
+        # with bombs planted, assign a number of 0-8 to all empty spaces (in all directions around that spot)
+        # which indicates how many neighboring bombs there are.
         for r in range(self.dim_size):       # for row
             for c in range(self.dim_size):   # for column
                 if self.board[r][c] == '*':  # if it's a bomb at that index ...
@@ -27,8 +27,19 @@ class Board:    # this creates the board object
                 # we use this function to populate 'self.board[r][c]'; showing how many bombs are in that [c][r] vicinity.
                 self.board[r][c] = self.get_num_neighboring_bombs(r,c)  
     # (just above) this function will give us the number of bombs in the area.          
-    def get_num_neighboring_bombs(self, row, column):
+    def get_num_neighboring_bombs(self, row, col):
         # now we have to iterate over every 9 spots surrounding every position.
+        # also, don't go out of bounds.
+
+        # initialize the total number to 0
+        num_neighboring_bombs = 0
+        # these two loops below will capture all surrouding directions of the 3*3 area
+        for r in range(row-1, (row+1)+1):    # row-1 to catch index 0, row+1 to adjust it out of "index counting" 
+                                            # and "+1" because range() in python is (bizarrely) exclusive of last item.
+            for c in range(col-1, (col+1)+1):
+                if r == row and c == col:
+                    continue # this is the original thing we were checking, so we just continue down the line
+
 
     def make_new_board(self):   # using dim size and num_bombs, make a new board
                                 # in the form of a list of lists (good for a 2d structure)
