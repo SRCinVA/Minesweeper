@@ -34,12 +34,13 @@ class Board:    # this creates the board object
         # initialize the total number to 0
         num_neighboring_bombs = 0
         # these two loops below will capture all surrouding directions of the 3*3 area
-        for r in range(row-1, (row+1)+1):    # row-1 to catch index 0, row+1 to adjust it out of "index counting" 
+        for r in range(max(0,row-1), min(self.dim_size-1, row+1)+1):    # row-1 to catch index 0, row+1 to adjust it out of "index counting" 
                                             # and "+1" because range() in python is (bizarrely) exclusive of last item.
-            for c in range(col-1, (col+1)+1):
+                                            # the max and min statments and their limits keep us in bounds when iterating.
+            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
                 if r == row and c == col:
                     continue # this is the original thing we were checking, so we just continue down the line
-
+        return
 
     def make_new_board(self):   # using dim size and num_bombs, make a new board
                                 # in the form of a list of lists (good for a 2d structure)
@@ -62,9 +63,19 @@ class Board:    # this creates the board object
         # when all of this is done, return the board:
         return board
 
+    def dig(self, row, col):
+        self.dug.add((row,col))
+
+        if self.board[row][col] == '*':
+            return False
+
 def play(dim_size=10, num_bombs=10):
     # create board and plant bombs
-    # show the user the board and ak them for input
+    board = Board(dim_size, num_bombs)
+
+    # show the user the board and ask them for input
+
+
     # if location is a bomb, the game ends
     # if not, dig recurvsively until until the spot is next to a bomb
     # rinse/repeat until there are no more spots to dig
