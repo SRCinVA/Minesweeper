@@ -64,10 +64,26 @@ class Board:    # this creates the board object
         return board
 
     def dig(self, row, col):
-        self.dug.add((row,col))
+        self.dug.add((row,col)) # this helps us be sure of where we've dug.
 
-        if self.board[row][col] == '*':
+        if self.board[row][col] == '*': # return False if a bomb has been placed at that particular spot.
             return False
+        # here's where it gets a bit more complicated
+        elif self.board[row][col] > 0: # means we're near a bomb
+            return True  # means we did not dig a bomb
+        
+        # if both of the above statements fail, then it's == 0
+        
+        # like get_num_of _Neiboring _bombs, we're going to employ the logic below to check the neighbors:
+
+        # row-1 to catch index 0, row+1 to adjust it out of "index counting"
+        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
+                                            # and "+1" because range() in python is (bizarrely) exclusive of last item.
+                                            # the max and min statments and their limits keep us in bounds when iterating.
+            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
+                if (r,c) in self.dug:
+                    continue # don't dig where you've already dug.
+                self.dig(r,c) 
 
 def play(dim_size=10, num_bombs=10):
     # create board and plant bombs
