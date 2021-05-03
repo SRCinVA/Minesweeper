@@ -81,9 +81,20 @@ class Board:    # this creates the board object
                                             # and "+1" because range() in python is (bizarrely) exclusive of last item.
                                             # the max and min statments and their limits keep us in bounds when iterating.
             for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
-                if (r,c) in self.dug:
-                    continue # don't dig where you've already dug.
-                self.dig(r,c) 
+                if (r,c) in self.dug: # check to see if it's already there ...
+                    continue # ... don't dig where you've already dug.
+                # another implicit 'else' here ...
+                self.dig(r,c) # ... if that (r,c) tuple is *not* dug into, then go ahead and do so.
+        # not sure what return True achieves here--jsut confirmation that the method completely executed ...?
+        return True
+        # overall insight: we should never actually hit a bomb; we should always be stopping right before one.
+
+    def __str__(self):
+        # a "magic function" where it prints out whatever the object returns.
+        # we can use this to return a string that shows the board.
+        
+        # create a new array that represents what the user should see:
+        visible_board = [[None for _ in range]]
 
 def play(dim_size=10, num_bombs=10):
     # create board and plant bombs
