@@ -94,7 +94,17 @@ class Board:    # this creates the board object
         # we can use this to return a string that shows the board.
         
         # create a new array that represents what the user should see:
-        visible_board = [[None for _ in range]]
+        visible_board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]  # create a list of sublists, both of dim_size
+        for row in range(self.dim_size):
+            for col in range(self.dim_size):
+                if (row,col) in self.dug:  # if that (row, col) is in self.dig (i.e., has already been dug) ...
+                    visible_board[row][col] = str(self.board[row][col]) # ... we put self.board value into visible_board
+                # if it's NOT already dug, then we'll make it a space, because we don't want the
+                # user to see the information it contains.
+                else:
+                    visible_board[row][col] = ' '
+        # put this entire board representation into a string
+
 
 def play(dim_size=10, num_bombs=10):
     # create board and plant bombs
