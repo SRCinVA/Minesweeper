@@ -104,6 +104,8 @@ class Board:    # this creates the board object
                 else:
                     visible_board[row][col] = ' '
         # put this entire board representation into a string
+        string_rep = ''
+        # we could go into spectacular code to make it look better, but she felt correctly that getting it to work is more important
 
 
 def play(dim_size=10, num_bombs=10):
@@ -117,5 +119,8 @@ def play(dim_size=10, num_bombs=10):
     # if not, dig recurvsively until until the spot is next to a bomb
     # rinse/repeat until there are no more spots to dig
 
-    pass
+    while len(board.dug) < board.dim_size ** 2 - num_bombs: # meaning that they still have places to play
+        print(board)
+        user_input = re.split(input(',(\\s)*', "Where would you like to dig? Input as row, col:  "))
+
 
