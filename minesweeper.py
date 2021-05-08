@@ -1,4 +1,5 @@
 import random
+import re
 
 class Board:    # this creates the board object
     def __init__(self, dim_size, num_bombs):  
@@ -122,5 +123,14 @@ def play(dim_size=10, num_bombs=10):
     while len(board.dug) < board.dim_size ** 2 - num_bombs: # meaning that they still have places to play
         print(board)
         user_input = re.split(input(',(\\s)*', "Where would you like to dig? Input as row, col:  "))
-
-
+        # the above basically says "match anything that is a comma with a space."
+        # this makes handling different combinations of spaces and characters easier.
+        # this tells us where the user is trying to dig
+        row, col = int(user_input[0]), int(user_input[-1])
+        # did not understand the explanation for why -1 may be suitable.
+        # the below helps to keep us in bounds:
+        if row < 0 or row >= board.dim_size or col < 0 or col >= board.dim_size:
+            print("Invalid spot. Try again")
+            continue
+        # if it's valid, we dig
+        board.dig()
