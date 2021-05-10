@@ -132,5 +132,19 @@ def play(dim_size=10, num_bombs=10):
         if row < 0 or row >= board.dim_size or col < 0 or col >= board.dim_size:
             print("Invalid spot. Try again")
             continue
-        # if it's valid, we dig
-        board.dig()
+        # if it's valid, we dig at that location, so we invoke board.dig()
+        # we can use this to tell us if we have uncovered a bomb.
+        safe = board.dig(row,col) # naturally, we start out as "safe"; we haven't dug up any bombs
+        if not safe: #meaning, we dug up bomb ...
+            break # ... as in, game over. This removes us from the while loop.
+
+    # we could exit the while loop only because we won or lost; no other possibilities
+    # we dug in every possible spot to dig and didn't hit any bombs.
+    if safe: # "still safe after everything"
+        print ("Congratulations!!")
+    else: # that, or you lost.
+        print("Sorry; game over!!")
+    
+
+
+
