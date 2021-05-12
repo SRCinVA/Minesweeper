@@ -90,7 +90,7 @@ class Board:    # this creates the board object
         return True
         # overall insight: we should never actually hit a bomb; we should always be stopping right before one.
 
-    def __str__(self):
+    #def __str__(self):
         # a "magic function" where it prints out whatever the object returns.
         # we can use this to return a string that shows the board.
         
@@ -105,7 +105,7 @@ class Board:    # this creates the board object
                 else:
                     visible_board[row][col] = ' '
         # put this entire board representation into a string
-        string_rep = ''
+        # string_rep = ''
         # we could go into spectacular code to make it look better, but she felt correctly that getting it to work is more important
 
 
@@ -115,14 +115,15 @@ def play(dim_size=10, num_bombs=10):
 
     # show the user the board and ask them for input
 
-
     # if location is a bomb, the game ends
     # if not, dig recurvsively until until the spot is next to a bomb
     # rinse/repeat until there are no more spots to dig
 
+    safe = True # because we haven't dug anywhere yet
+
     while len(board.dug) < board.dim_size ** 2 - num_bombs: # meaning that they still have places to play
         print(board)
-        user_input = re.split(input(',(\\s)*', "Where would you like to dig? Input as row, col:  "))
+        user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row, col:  "))
         # the above basically says "match anything that is a comma with a space."
         # this makes handling different combinations of spaces and characters easier.
         # this tells us where the user is trying to dig
@@ -144,7 +145,11 @@ def play(dim_size=10, num_bombs=10):
         print ("Congratulations!!")
     else: # that, or you lost.
         print("Sorry; game over!!")
-    
+        # to show the entire board.
+        # Don't understand where board.dug is coming from
+        # (see the Board class initialization at the top.)
+        board.dug = [(r,c) for r in range(board.dim_size) for c in range(board.dim_size)]
+        print(board)
 
-
-
+if __name__ == '__main__': # this is just a way of making sure you run this particular file if you have dependent files
+    play()
